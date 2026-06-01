@@ -12,7 +12,6 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: QBRAID_API_KEY
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -20,6 +19,8 @@ jobs:
       - name: Deploy to qBraid
         id: deploy
         uses: qBraid/upload-course-action@v0.1.0-beta
+        env:
+          QBRAID_API_BASE_URL: https://api.qbraid.com/api/v1
         with:
           # Required: Your qBraid API Key (stored in repository secrets)
           api-key: ${{ secrets.QBRAID_API_KEY }}
