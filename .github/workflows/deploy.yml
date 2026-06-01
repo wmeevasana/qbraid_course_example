@@ -19,7 +19,7 @@ jobs:
 
       - name: Deploy to qBraid
         id: deploy
-        uses: qBraid/upload-course-action@v0.1.0-beta
+        uses: qBraid/upload-course-action@main
         with:
           # Required: Your qBraid API Key (stored in repository secrets)
           api-key: ${{ secrets.QBRAID_API_KEY }}
