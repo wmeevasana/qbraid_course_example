@@ -1,0 +1,31 @@
+courseName: "Quantum Optimization with QAOA"
+courseDescription: "A course demonstrating the Quantum Approximate Optimization Algorithm (QAOA) for solving Max-Cut problems, along with environment setup and visualization examples."
+visibility: "public"
+imageLink:
+  darkLogo: "https://img.freepik.com/free-vector/gradient-quantum-illustration_52683-80504.jpg"
+  lightLogo: "https://img.freepik.com/free-vector/gradient-quantum-illustration_52683-80504.jpg"
+tags:
+  - "quantum computing"
+  - "QAOA"
+  - "optimization"
+  - "qiskit"
+  - "networkx"
+deployedTo:
+  - "qbraid.com"
+content:
+  - chapterName: "Introduction"
+    chapterFileName: "01_introduction.ipynb"
+    filePath: ""
+    baseFilePath: "./01_introduction.ipynb"
+    chapterNumber: 1
+    kernelName: "python3"
+    kernelId: "Python 3"
+    sections: []
+  - chapterName: "QAOA Algorithm"
+    chapterFileName: "02_qaoa_algorithm.ipynb"
+    filePath: ""
+    baseFilePath: "./02_qaoa_algorithm.ipynb"
+    chapterNumber: 2
+    kernelName: "python3"
+    kernelId: "Python 3"
+    sections: []

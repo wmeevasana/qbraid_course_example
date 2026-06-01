@@ -1,0 +1,58 @@
+name: Deploy Course to qBraid
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Deployment mode (create/update)'
+        required: true
+        default: 'create'
+        type: choice
+        options:
+        - create
+        - update
+      course_id:
+        description: 'Course ID (required for update)'
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Deploy to qBraid
+        id: deploy
+        uses: qBraid/upload-course-action@v0.1.0-beta
+        with:
+          # Required: Your qBraid API Key (stored in repository secrets)
+          api-key: ${{ secrets.QBRAID_API_KEY }}
+          
+          # Required: GitHub token with read access to the repository
+          repo-read-token: ${{ secrets.GITHUB_TOKEN }}
+          
+          # Optional: Path to your course.json file (defaults to 'course.json')
+          course-json-path: 'course.json'
+
+          # Optional: Type of article to create (course or blog, defaults to 'course')
+          article-type: 'course'
+          
+          # Optional: Operation mode ('create' or 'update', defaults to 'create')
+          mode: ${{ inputs.mode || 'create' }}
+
+          # Optional: Custom ID of the course (Required if mode is 'update')
+          course-custom-id: ${{ inputs.course_id }}
+
+      - name: Show deployment results
+        if: success()
+        run: |
+          echo "✅ Course deployed successfully!"
+          echo "Course Name: ${{ steps.deploy.outputs.course_name }}"
+          echo "Course URL: ${{ steps.deploy.outputs.qbook_url }}"
