@@ -1,0 +1,38 @@
+name: Update Course on qBraid
+
+on:
+  workflow_dispatch:
+    inputs:
+      course_id:
+        description: 'Course ID to update'
+        required: true
+        default: 'q-course-quantum-optimization-with-qaoa'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    environment: QBRAID_API_KEY
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Update Course
+        id: update
+        uses: qBraid/upload-course-action@main
+        with:
+          api-key: ${{ secrets.QBRAID_API_KEY }}
+          repo-read-token: ${{ secrets.GITHUB_TOKEN }}
+          course-json-path: 'course.json'
+          article-type: 'course'
+          mode: 'update'
+          course-custom-id: ${{ github.event.inputs.course_id }}
+
+      - name: Show results
+        if: success()
+        run: |
+          echo "✅ Course updated successfully!"
+          echo "Course Name: ${{ steps.update.outputs.course_name }}"
+          echo "Course URL: ${{ steps.update.outputs.qbook_url }}"
