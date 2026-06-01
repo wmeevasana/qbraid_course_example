@@ -5,6 +5,19 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Deployment mode (create/update)'
+        required: true
+        default: 'update'
+        type: choice
+        options:
+        - create
+        - update
+      course_id:
+        description: 'Course ID (required for update)'
+        required: false
+        default: 'q-course-quantum-optimization-with-qaoa'
 
 permissions:
   contents: write
@@ -32,6 +45,12 @@ jobs:
 
           # Optional: Type of article to create (course or blog, defaults to 'course')
           article-type: 'course'
+
+          # Optional: Operation mode ('create' or 'update', defaults to 'create')
+          mode: ${{ inputs.mode || 'create' }}
+
+          # Optional: Custom ID of the course (Required if mode is 'update')
+          course-custom-id: ${{ inputs.course_id }}
 
       - name: Show deployment results
         if: success()
